@@ -1,3 +1,6 @@
+# heymou_wagtail_cms
+Mi primer CMS basado en Django + Wagtail CMS
+
 # Wagtail CMS Project
 
 Este es un proyecto CMS construido con Wagtail, un CMS flexible y moderno basado en Django.
@@ -12,7 +15,7 @@ Este es un proyecto CMS construido con Wagtail, un CMS flexible y moderno basado
 
 1. Clonar el repositorio:
 ```bash
-git clone <url-del-repositorio>
+git clone git@github.com:soymoisesweb/heymou_wagtail_cms.git
 cd wagtail-pruebas
 ```
 
