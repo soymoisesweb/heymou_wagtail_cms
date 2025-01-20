@@ -12,18 +12,17 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # Hosts permitidos
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['pruebas.heymou.com', 'www.pruebas.heymou.com']
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# Database - Usando la configuración de Cloudpanel
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
+        'NAME': os.getenv('DB_NAME', 'wagtail_db'),
+        'USER': os.getenv('DB_USER', 'wagtail_user'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -36,15 +35,15 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# Static files configuration
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# Static files configuration - Adaptado para Cloudpanel
+STATIC_ROOT = '/home/cloudpanel/htdocs/pruebas.heymou.com/static'
 STATIC_URL = '/static/'
 
 # Media files configuration
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/home/cloudpanel/htdocs/pruebas.heymou.com/media'
 MEDIA_URL = '/media/'
 
-# Security settings
+# Security settings - SSL ya está configurado por Cloudpanel
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
@@ -63,7 +62,7 @@ LOGGING = {
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'error.log'),
+            'filename': '/home/cloudpanel/htdocs/pruebas.heymou.com/error.log',
         },
     },
     'loggers': {
@@ -83,12 +82,11 @@ CACHES = {
     }
 }
 
-# Middleware adicional para producción
+# Middleware para archivos estáticos
 MIDDLEWARE += [
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Para servir archivos estáticos
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-# Configuración de Whitenoise para archivos estáticos
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 try:
